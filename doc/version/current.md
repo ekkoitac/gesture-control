@@ -3,7 +3,7 @@
 - Active version: `v0.1-prototype`
 - Active TODO: `doc/version/v0.1-prototype/todo.md`
 - Active phase: `Phase 0: Version And Product Baseline`
-- Active task: `T0-01`
+- Active task: `T0-02`
 - Status: `planned`
 
 ## Agent Entry
