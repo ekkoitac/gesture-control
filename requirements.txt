@@ -1,0 +1,5 @@
+mediapipe>=0.10.35,<0.11
+numpy>=1.26,<3
+opencv-python>=4.10,<5
+PyYAML>=6,<7
+pynput>=1.7,<2

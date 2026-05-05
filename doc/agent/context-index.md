@@ -7,7 +7,7 @@
 ## L1 (Active Version)
 
 - `doc/version/current.md`
-- Active version TODO, currently `doc/version/v0.1-prototype/todo.md`
+- Active version TODO, currently `doc/version/v0.1-prototype/issues-todo.md`
 - `doc/agent/todo-execution.md`
 
 ## L2 (Routing)

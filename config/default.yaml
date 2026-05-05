@@ -1,0 +1,37 @@
+runtime:
+  mode: dry-run
+  camera_index: 0
+  camera_width: 1280
+  camera_height: 720
+  show_window: true
+  window_name: Gesture Control Debug
+  max_fps: 30.0
+  max_frames: null
+
+tracking:
+  model_asset_path: config/models/hand_landmarker.task
+
+hotkeys:
+  pause_toggle: "<ctrl>+<alt>+p"
+  exit: "<ctrl>+<alt>+q"
+
+gesture:
+  control_fold_tolerance: 0.015
+  control_extend_threshold: 0.04
+  control_thumb_threshold: 0.075
+  cursor_smoothing: 0.35
+  cursor_dead_zone: 0.012
+  pinch_threshold: 0.055
+  pinch_release_threshold: 0.07
+  pinch_scroll_gain: 1800.0
+  pinch_min_delta: 0.006
+  pinch_cooldown_frames: 3
+  wave_threshold: 0.085
+  wave_cooldown_frames: 8
+  shortcut_cooldown_frames: 15
+
+shortcuts:
+  - gesture: thumbs_up
+    keys: ["cmd", "l"]
+  - gesture: ok_sign
+    keys: ["cmd", "r"]

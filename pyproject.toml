@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gesture-control"
+version = "0.1.0"
+description = "Local webcam-based gesture control prototype"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "mediapipe>=0.10.35,<0.11",
+  "numpy>=1.26,<3",
+  "opencv-python>=4.10,<5",
+  "PyYAML>=6,<7",
+  "pynput>=1.7,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2,<9",
+  "ruff>=0.6,<0.8",
+]
+
+[project.scripts]
+gesture-control = "gesture_control.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gesture_control*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

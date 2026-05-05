@@ -21,10 +21,12 @@ doc/version/
     mvp-todo-example.md
   v0.1-prototype/
     todo.md
+    issues-todo.md
 ```
 
 - `doc/version/current.md` points to the active version and active TODO.
 - `doc/version/<version>/todo.md` is the task contract for that version.
+- `doc/version/<version>/issues-todo.md` is optional and used to track post-completion unresolved issues or validation gaps.
 - `doc/version/examples/` contains format examples only; files there must not be selected as active TODOs.
 - `doc/iterations/` remains the historical record of completed work.
 
