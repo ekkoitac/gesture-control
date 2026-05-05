@@ -17,7 +17,7 @@
 8. `doc/architecture/runtime-flow.md`
 9. `doc/architecture/tech-stack.md`
 10. `doc/version/current.md`
-11. `doc/version/mvp/todo.md`
+11. `doc/version/v0.1-prototype/todo.md`
 12. `doc/changelog.md`
 13. `doc/decisions/`
 
@@ -27,7 +27,7 @@
 - `doc/architecture/`: implementation truth and runtime behavior.
 - `doc/decisions/`: key architecture/product decisions.
 - `doc/iterations/`: iteration-level change records.
-- `doc/version/`: version-level execution TODOs and active focus.
+- `doc/version/`: version-level execution TODOs, active focus, and non-active examples.
 - `doc/agent/`: progressive context for coding agents.
 
 ## Maintenance Rules

@@ -38,7 +38,9 @@ gesture-control/
     version/
       README.md
       current.md
-      mvp/
+      examples/
+        mvp-todo-example.md
+      v0.1-prototype/
         todo.md
 
     iterations/

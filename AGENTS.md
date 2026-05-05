@@ -10,7 +10,7 @@
 
 1. `AGENTS.md`
 2. `doc/version/current.md`
-3. Active version TODO, currently `doc/version/mvp/todo.md`
+3. Active version TODO, currently `doc/version/v0.1-prototype/todo.md`
 4. `doc/agent/todo-execution.md`
 5. `doc/agent/context-index.md`
 6. Task-specific docs in `doc/product/` and `doc/architecture/`

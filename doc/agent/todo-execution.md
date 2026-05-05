@@ -4,7 +4,7 @@
 
 1. `AGENTS.md`
 2. `doc/version/current.md`
-3. Active version TODO, currently `doc/version/mvp/todo.md`
+3. Active version TODO, currently `doc/version/v0.1-prototype/todo.md`
 4. This file
 5. Task-specific docs from `doc/agent/context-index.md`
 
@@ -40,4 +40,3 @@ When finishing a TODO, report:
 - Validation performed.
 - TODO status update.
 - Remaining next task.
-

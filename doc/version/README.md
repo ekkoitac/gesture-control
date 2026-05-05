@@ -17,12 +17,15 @@ Use version TODOs to keep agent attention narrow:
 doc/version/
   README.md
   current.md
-  mvp/
+  examples/
+    mvp-todo-example.md
+  v0.1-prototype/
     todo.md
 ```
 
 - `doc/version/current.md` points to the active version and active TODO.
 - `doc/version/<version>/todo.md` is the task contract for that version.
+- `doc/version/examples/` contains format examples only; files there must not be selected as active TODOs.
 - `doc/iterations/` remains the historical record of completed work.
 
 ## Status Vocabulary
@@ -54,4 +57,3 @@ doc/version/
 - Add an iteration record under `doc/iterations/` for completed feature work.
 - Keep `doc/changelog.md` human-readable and result-focused.
 - Update architecture docs only when runtime behavior, module boundaries, or interfaces change.
-

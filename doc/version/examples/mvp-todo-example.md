@@ -1,4 +1,6 @@
-# Version TODO: mvp
+# Example Version TODO: mvp
+
+This file is a format example only. Do not use it as an active execution contract.
 
 ## Active Focus
 
@@ -61,7 +63,7 @@ Create the first runnable harness only after Phase 0 gives agents enough product
 
 - [ ] T1-01 [L] Scaffold first runnable project harness
   Scope: Create the minimal executable structure for the chosen stack and wire one observable gesture-control path.
-  Read: `doc/version/current.md`, `doc/version/mvp/todo.md`, `doc/architecture/tech-stack.md`, `doc/architecture/runtime-flow.md`.
+  Read: `doc/version/current.md`, `doc/version/<version>/todo.md`, `doc/architecture/tech-stack.md`, `doc/architecture/runtime-flow.md`.
   Acceptance: The project has a documented local run path and one visible/testable behavior.
   Validation: Run the documented command and record the result in a new iteration file.
   Subagent: eligible if file ownership can be split.
@@ -72,4 +74,3 @@ Create the first runnable harness only after Phase 0 gives agents enough product
   Acceptance: Future agents can verify the harness without guessing.
   Validation: Run the verification path and record output summary in `doc/iterations/`.
   Subagent: no unless verification can run independently while implementation continues.
-
