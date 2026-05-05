@@ -4,19 +4,25 @@
 
 - `AGENTS.md`
 
-## L1 (Routing)
+## L1 (Active Version)
+
+- `doc/version/current.md`
+- Active version TODO, currently `doc/version/mvp/todo.md`
+- `doc/agent/todo-execution.md`
+
+## L2 (Routing)
 
 - This file (`doc/agent/context-index.md`)
 - `doc/agent/task-routing.md`
+- `doc/agent/subagent-rules.md` when a TODO is `[L]` or `[XL]`
 
-## L2 (Task-Specific)
+## L3 (Task-Specific)
 
 - Product intent changes: `doc/product/*`
 - Architecture/runtime changes: `doc/architecture/*`
 - Iteration history checks: `doc/iterations/*`
 
-## L3 (When Needed)
+## L4 (When Needed)
 
 - Decision history: `doc/decisions/*`
 - Global changelog: `doc/changelog.md`
-

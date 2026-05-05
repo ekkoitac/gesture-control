@@ -16,8 +16,10 @@
 7. `doc/architecture/module-map.md`
 8. `doc/architecture/runtime-flow.md`
 9. `doc/architecture/tech-stack.md`
-10. `doc/changelog.md`
-11. `doc/decisions/`
+10. `doc/version/current.md`
+11. `doc/version/mvp/todo.md`
+12. `doc/changelog.md`
+13. `doc/decisions/`
 
 ## Document Map
 
@@ -25,6 +27,7 @@
 - `doc/architecture/`: implementation truth and runtime behavior.
 - `doc/decisions/`: key architecture/product decisions.
 - `doc/iterations/`: iteration-level change records.
+- `doc/version/`: version-level execution TODOs and active focus.
 - `doc/agent/`: progressive context for coding agents.
 
 ## Maintenance Rules
