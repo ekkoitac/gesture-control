@@ -1,76 +1,105 @@
 # Example Version TODO: mvp
 
-This file is a format example only. Do not use it as an active execution contract.
+This file is a canonical format example only. Do not use it as an active execution contract.
 
-## Active Focus
+## Version Metadata
 
-- Current phase: `Phase 0: Documentation And Project Baseline`
-- Current task: `T0-01`
+- Version: `mvp`
+- Active phase: `Phase 0`
+- Active task: `T0-01`
 - Status: `planned`
+- Last updated: `YYYY-MM-DD`
+- Validation baseline: `not established`
+
+## Progress Board
+
+- Current task: `T0-01`
+- Blocked tasks: none
+- Next task: `T0-02`
+- Completed count: `0/5`
+- Validation debt: none
 
 ## Execution Rules
 
 - Work on one task at a time.
 - If the user names a phase or task, that named item is the boundary.
 - If no task is named, choose the first unchecked task in the current phase.
-- Do not start later phases until current-phase acceptance is met.
-- Mark tasks done only after implementation, validation, and required documentation updates are complete.
-- If a task is too broad, split it into smaller TODOs before implementation.
+- Do not start later phases until current-phase exit criteria are met.
+- Do not mark tasks done before implementation, validation, required docs, and evidence are complete.
+- If a task is too broad, mark it `split-required` and split it into smaller TODOs before implementation.
 
 ## Task Size Tags
 
 - `[S]`: single focused edit, no subagent.
-- `[M]`: moderate task, usually no subagent unless investigation can run in parallel.
-- `[L]`: complex task, subagent eligible if work can be split safely.
-- `[XL]`: must be split into smaller TODOs before implementation unless explicitly approved.
+- `[M]`: moderate task, main agent by default; subagent only for parallel read-only investigation.
+- `[L]`: complex task, subagent eligible only with non-overlapping ownership and a clear deliverable.
+- `[XL]`: split into smaller TODOs first unless the user explicitly approves a larger execution plan.
 
-## Phase 0: Documentation And Project Baseline
+## Phase Gates
 
-### Goal
+### Phase 0: Documentation And Project Baseline
 
-Turn the initialized documentation scaffold into a concrete project baseline before implementation starts.
+- Goal: Turn the initialized documentation scaffold into a concrete project baseline before implementation starts.
+- Entry criteria: Documentation scaffold exists.
+- Exit criteria: Product baseline, technical baseline, and runtime flow are specific enough for implementation.
+- Validation required before moving on: Re-read changed docs and confirm no required task evidence is missing.
 
-### TODO
+### Phase 1: First Runnable Harness
+
+- Goal: Create the first runnable harness only after Phase 0 gives agents enough product and architecture context.
+- Entry criteria: Phase 0 exit criteria are complete.
+- Exit criteria: Project has a documented local run path and one visible/testable behavior.
+- Validation required before moving on: Run the documented command and record evidence in `doc/iterations/`.
+
+## Task Records
 
 - [ ] T0-01 [S] Populate product baseline
-  Scope: Fill `doc/product/vision.md` and `doc/product/requirements.md` with the first concrete product goals, users, non-goals, and MVP boundaries.
+  Status: planned
+  Progress: 0%
+  Owner: main-agent
+  Scope: Fill product docs with concrete goals, users, non-goals, MVP boundaries, and safety expectations.
+  Non-goals: Do not choose runtime stack or implement code.
   Read: `README.md`, `doc/product/vision.md`, `doc/product/requirements.md`.
+  Files likely touched: `doc/product/vision.md`, `doc/product/requirements.md`.
   Acceptance: Product intent is specific enough for an agent to avoid inventing scope.
-  Validation: Re-read both files and confirm goals, users, non-goals, and MVP boundaries exist.
+  Validation: Re-read changed product docs and confirm goals, users, non-goals, and MVP boundaries exist.
+  Evidence: pending.
+  Risks: Product scope may still be too broad.
+  Blockers: none.
+  Follow-ups: none.
   Subagent: no.
+  Done criteria: Product docs updated, validation evidence recorded, task checked, progress board updated.
 
 - [ ] T0-02 [S] Choose initial technical baseline
-  Scope: Fill `doc/architecture/tech-stack.md` with the first implementation stack, local runtime expectations, and validation commands.
+  Status: planned
+  Progress: 0%
+  Owner: main-agent
+  Scope: Fill tech-stack docs with runtime, framework/library choices, local commands, and validation expectations.
+  Non-goals: Do not implement the runnable harness.
   Read: `doc/architecture/tech-stack.md`, `doc/architecture/overview.md`.
-  Acceptance: Future agents know which runtime, framework, and commands to use before coding.
+  Files likely touched: `doc/architecture/tech-stack.md`.
+  Acceptance: Future agents know the runtime, framework, and commands before coding.
   Validation: Confirm commands are either real repo commands or explicitly marked as not available yet.
+  Evidence: pending.
+  Risks: Commands may become stale after scaffold work starts.
+  Blockers: none.
+  Follow-ups: Refresh commands after the first runnable harness exists.
   Subagent: no.
-
-- [ ] T0-03 [M] Define first runtime flow
-  Scope: Fill `doc/architecture/overview.md`, `doc/architecture/module-map.md`, and `doc/architecture/runtime-flow.md` with the first intended gesture-control flow.
-  Read: `doc/architecture/*`, `doc/product/requirements.md`.
-  Acceptance: The input, recognition, mapping, execution, and feedback responsibilities are clearly separated.
-  Validation: Confirm each component has a responsibility and the flow has at least one failure path.
-  Subagent: read-only exploration eligible.
-
-## Phase 1: First Runnable Harness
-
-### Goal
-
-Create the first runnable harness only after Phase 0 gives agents enough product and architecture context.
-
-### TODO
+  Done criteria: Tech baseline documented, validation evidence recorded, task checked, progress board updated.
 
 - [ ] T1-01 [L] Scaffold first runnable project harness
-  Scope: Create the minimal executable structure for the chosen stack and wire one observable gesture-control path.
-  Read: `doc/version/current.md`, `doc/version/<version>/todo.md`, `doc/architecture/tech-stack.md`, `doc/architecture/runtime-flow.md`.
+  Status: planned
+  Progress: 0%
+  Owner: main-agent
+  Scope: Create minimal executable structure and wire one observable behavior.
+  Non-goals: Do not add unrelated product features or broad refactors.
+  Read: `doc/version/current.md`, active TODO, `doc/architecture/tech-stack.md`, `doc/architecture/runtime-flow.md`.
+  Files likely touched: implementation entrypoint, package config, README, tests.
   Acceptance: The project has a documented local run path and one visible/testable behavior.
-  Validation: Run the documented command and record the result in a new iteration file.
-  Subagent: eligible if file ownership can be split.
-
-- [ ] T1-02 [M] Add first verification path
-  Scope: Add the smallest useful test, smoke check, or manual verification script for the runnable harness.
-  Read: `doc/architecture/tech-stack.md`, implementation files created in `T1-01`.
-  Acceptance: Future agents can verify the harness without guessing.
-  Validation: Run the verification path and record output summary in `doc/iterations/`.
-  Subagent: no unless verification can run independently while implementation continues.
+  Validation: Run documented command and record result in a new iteration file.
+  Evidence: pending.
+  Risks: Task may need to split if implementation touches unrelated subsystems.
+  Blockers: none.
+  Follow-ups: Add the first verification path.
+  Subagent: eligible only for isolated file ownership or parallel read-only verification.
+  Done criteria: Harness runs, validation evidence recorded, docs synced, task checked, progress board updated.

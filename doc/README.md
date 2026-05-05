@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-- Stage: v0.1 prototype issue TODO completed
+- Stage: v0.2 cursor smoothness planned
 - Strategy file: `spec-strategy.md`
 
 ## Reading Order (Human)
@@ -17,10 +17,11 @@
 8. `doc/architecture/runtime-flow.md`
 9. `doc/architecture/tech-stack.md`
 10. `doc/version/current.md`
-11. `doc/version/v0.1-prototype/issues-todo.md`
-12. `doc/version/v0.1-prototype/todo.md`
-13. `doc/changelog.md`
-14. `doc/decisions/`
+11. `doc/version/v0.2-cursor-smoothness/todo.md`
+12. `doc/version/v0.1-prototype/issues-todo.md`
+13. `doc/version/v0.1-prototype/todo.md`
+14. `doc/changelog.md`
+15. `doc/decisions/`
 
 ## Document Map
 

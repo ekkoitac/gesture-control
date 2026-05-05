@@ -3,14 +3,14 @@
 ## Project Snapshot
 
 - Project: `gesture-control`
-- Stage: v0.1 prototype issue TODO completed
+- Stage: v0.2 cursor smoothness planned
 - Source-of-truth strategy: `spec-strategy.md`
 
 ## Progressive Read Order
 
 1. `AGENTS.md`
 2. `doc/version/current.md`
-3. Active version TODO, currently `doc/version/v0.1-prototype/issues-todo.md`
+3. Active version TODO, currently `doc/version/v0.2-cursor-smoothness/todo.md`
 4. `doc/agent/todo-execution.md`
 5. `doc/agent/context-index.md`
 6. Task-specific docs in `doc/product/` and `doc/architecture/`
@@ -21,6 +21,8 @@
 - Keep human docs as the authoritative source of project facts.
 - Keep agent docs as short routing/index context.
 - Work on one active TODO item at a time unless the user explicitly asks for a batch.
+- Treat the active version TODO as a task board, not a loose checklist.
+- Keep task `Status`, `Progress`, `Evidence`, `Blockers`, `Follow-ups`, and the progress board current.
 - Use `doc/agent/subagent-rules.md` before considering subagents.
 - After each feature iteration, update:
   - `doc/changelog.md`
@@ -33,4 +35,5 @@
 
 - Confirm docs are updated in the same change as feature implementation.
 - Do not leave behavior changes undocumented.
-- Do not mark TODO items done before validation.
+- Do not mark TODO items done before validation evidence is recorded.
+- If validation cannot run, leave the task unchecked and mark it `blocked` or `validating`.

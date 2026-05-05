@@ -2,6 +2,8 @@
 
 ## 2026-05-05
 
+- Upgraded version TODO governance with status lifecycle, progress board, phase gates, required task evidence, and stricter completion rules.
+- Opened `v0.2-cursor-smoothness` to optimize index-finger cursor smoothness and establish the relative cursor-control task split.
 - Completed `I0-05` to `I0-07`: cursor movement now requires an intentional index-finger pointing pose, macOS cursor x mapping is flipped to match user-perceived hand direction, user dry-run and OS manual validation passed, and release/known-issue docs now show the v0.1 issue TODO as complete.
 - Updated `I0-04` with user OS-mode validation feedback and added follow-up TODOs for index-finger-only cursor movement and cursor direction alignment.
 - Recorded `I0-04` OS-input preflight results and marked the task blocked on user-controlled macOS Terminal Accessibility/manual OS-emission validation.
