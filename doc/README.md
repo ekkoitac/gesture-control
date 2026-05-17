@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-- Stage: v0.2 cursor smoothness planned
+- Stage: v0.2 cursor smoothness implemented
 - Strategy file: `spec-strategy.md`
 
 ## Reading Order (Human)
@@ -34,6 +34,6 @@
 
 ## Maintenance Rules
 
-- Update docs in the same PR/commit as feature changes.
+- Update docs in the same change as feature changes.
 - Prefer facts and evidence over narrative text.
 - If code and docs diverge, fix docs immediately after code verification.

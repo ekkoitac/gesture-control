@@ -13,6 +13,11 @@ class ActionType(str, Enum):
     NONE = "none"
 
 
+class CursorControlMode(str, Enum):
+    ABSOLUTE = "absolute"
+    RELATIVE = "relative"
+
+
 @dataclass(frozen=True)
 class Point3D:
     x: float
@@ -40,6 +45,7 @@ class GestureSnapshot:
     active: bool
     paused: bool
     tracking_lost: bool
+    cursor_mode: CursorControlMode = CursorControlMode.ABSOLUTE
     cursor_position: tuple[float, float] | None = None
     cursor_delta: tuple[float, float] | None = None
     pinch_active: bool = False

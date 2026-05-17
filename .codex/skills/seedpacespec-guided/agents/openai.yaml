@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Guided"
+short_description: "通过逐步问答生成 proposal、design、TRD 和 tasks。"
+default_prompt: "$seedpacespec-guided "

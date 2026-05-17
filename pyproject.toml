@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gesture-control"
-version = "0.1.0"
-description = "Local webcam-based gesture control prototype"
+version = "0.2.0"
+description = "Local webcam-based gesture control prototype with relative cursor smoothing"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

@@ -6,7 +6,7 @@
 - FR-002: The prototype must detect at least one visible hand and expose a visible debug state for hand present, no hand, active, paused, and emitted action.
 - FR-003: The prototype must support an activation gesture or activation state before emitting mouse, scroll, or keyboard events.
 - FR-004: The prototype must provide a global pause or exit hotkey so the user can stop control even if camera tracking is wrong.
-- FR-005: In active mode, an intentional index-finger pointing pose must map to mouse pointer movement with smoothing and bounded output; relaxed hands, open palms, and non-pointer gestures must not move the cursor.
+- FR-005: In active mode, an intentional index-finger pointing pose must map to relative mouse pointer movement with adaptive smoothing, jitter filtering, max-step clamping, and bounded output; relaxed hands, open palms, and non-pointer gestures must not move the cursor.
 - FR-006: In active mode, thumb-index pinch with vertical movement must emit system scroll events for the focused page, list, or scrollable surface.
 - FR-007: In active mode, deliberate lateral wave movement must emit mouse wheel-style scroll actions.
 - FR-008: The prototype must support configurable gesture-to-keyboard-shortcut mappings without code changes.

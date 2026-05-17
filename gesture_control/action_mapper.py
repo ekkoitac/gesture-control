@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from gesture_control.contracts import ActionCommand, ActionType, GestureSnapshot
+from gesture_control.contracts import ActionCommand, ActionType, CursorControlMode, GestureSnapshot
+
+
+def _cursor_mode_value(mode: CursorControlMode | str) -> str:
+    if isinstance(mode, CursorControlMode):
+        return mode.value
+    return str(mode)
 
 
 @dataclass
@@ -32,19 +38,27 @@ class ActionMapper:
             or snapshot.shortcut_gesture is not None
         )
 
-        if not suppress_cursor and snapshot.cursor_position and snapshot.cursor_delta:
+        cursor_mode = _cursor_mode_value(snapshot.cursor_mode)
+        has_cursor_target = snapshot.cursor_delta and (
+            cursor_mode == CursorControlMode.RELATIVE.value or snapshot.cursor_position is not None
+        )
+        if not suppress_cursor and has_cursor_target:
             dx, dy = snapshot.cursor_delta
             if dx != 0.0 or dy != 0.0:
+                payload = {
+                    "mode": cursor_mode,
+                    "delta": snapshot.cursor_delta,
+                }
+                if snapshot.cursor_position is not None:
+                    payload["position"] = snapshot.cursor_position
+
                 commands.append(
                     ActionCommand(
                         action_type=ActionType.MOVE_CURSOR,
-                        payload={
-                            "position": snapshot.cursor_position,
-                            "delta": snapshot.cursor_delta,
-                        },
+                        payload=payload,
                         description=(
-                            "cursor move "
-                            f"({snapshot.cursor_position[0]:.3f}, {snapshot.cursor_position[1]:.3f})"
+                            f"cursor {cursor_mode} "
+                            f"delta({snapshot.cursor_delta[0]:.3f}, {snapshot.cursor_delta[1]:.3f})"
                         ),
                     )
                 )

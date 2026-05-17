@@ -11,7 +11,7 @@
   6. render debug overlays so safety and behavior are visible.
 
 - Safety is first-class: no output should be emitted unless activation is satisfied and runtime state is active.
-- Activation strategy (v0.1): back-of-hand shaka activates; palm-facing thumbs down deactivates; pause and exit are always available via hotkeys.
+- Activation strategy: back-of-hand shaka activates; palm-facing thumbs down deactivates; pause and exit are always available via hotkeys.
 
 ## Core Components
 
@@ -20,11 +20,11 @@
   - runtime hotkey listener for pause/exit.
 - Recognition layer:
   - hand landmark tracking.
-  - gesture feature extraction (index-pointing cursor intent, pinch distance, wave displacement).
+  - gesture feature extraction (index-pointing relative cursor intent, pinch distance, wave displacement).
   - control state machine (inactive, active, paused, tracking-lost).
 - Control/execution layer:
-  - action mapping with smoothing, thresholds, cooldowns, and debounce.
-  - backend adapter for OS events (`dry-run` vs `macOS`), including macOS user-perspective cursor coordinate mapping.
+  - gesture smoothing, thresholds, cooldowns, and debounce before semantic action mapping.
+  - backend adapter for OS events (`dry-run` vs `macOS`), including macOS relative cursor movement with user-perspective x direction and bounded output.
   - debug overlay and logging.
 
 ## Key Interfaces
@@ -34,6 +34,6 @@
   - OS input APIs through `pynput` for cursor/scroll/keyboard output.
 - Internal contracts:
   - `TrackingResult`: normalized landmarks + confidence + hand presence.
-  - `GestureSnapshot`: interpreted gesture signals for one frame.
+  - `GestureSnapshot`: interpreted gesture signals for one frame, including cursor mode and normalized cursor delta.
   - `ActionCommand`: backend-ready semantic action (move, scroll, shortcut, no-op).
   - `InputBackend`: interface for action emission with dry-run and macOS implementations.

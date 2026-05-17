@@ -19,8 +19,12 @@ gesture:
   control_fold_tolerance: 0.015
   control_extend_threshold: 0.04
   control_thumb_threshold: 0.075
+  cursor_mode: relative
   cursor_smoothing: 0.35
+  cursor_fast_smoothing: 0.70
   cursor_dead_zone: 0.012
+  cursor_jitter_floor: 0.004
+  cursor_max_step: 0.080
   pinch_threshold: 0.055
   pinch_release_threshold: 0.07
   pinch_scroll_gain: 1800.0

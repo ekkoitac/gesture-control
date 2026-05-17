@@ -2,7 +2,8 @@
 
 ## Active
 
-- No active v0.1 prototype issues are tracked after `I0-07`.
+- No active runtime defect is known after v0.2 automated and dry-run validation.
+- Manual macOS OS-mode cursor-feel validation for relative movement remains a follow-up before claiming live hand-feel quality.
 
 ## Resolved
 

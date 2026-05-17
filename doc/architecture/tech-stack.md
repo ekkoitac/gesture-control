@@ -26,7 +26,7 @@
 
 ## Tooling
 
-- Build: none for v0.1; local editable install path only.
+- Build: none for v0.2; local editable install path only.
 - Test: `pytest` for non-camera unit tests and dry-run mapping checks.
 - Lint/format: `ruff` (lint + format) for fast local checks.
 

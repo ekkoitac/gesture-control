@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from math import hypot
+
+import pytest
+
 from gesture_control.config import GestureConfig
-from gesture_control.contracts import Point3D, TrackingResult
+from gesture_control.contracts import CursorControlMode, Point3D, TrackingResult
 from gesture_control.gesture_engine import GestureEngine
 
 
@@ -316,6 +320,89 @@ def test_relaxed_pinch_is_not_ok_sign() -> None:
     )
     assert scrolled.shortcut_gesture is None
     assert scrolled.pinch_scroll != 0.0
+
+
+def test_relative_cursor_first_pointing_frame_seeds_without_jump() -> None:
+    engine = GestureEngine(GestureConfig())
+
+    engine.update(_shaka_tracking(), paused=False)
+    first = engine.update(_tracking_result(index_tip=(0.40, 0.50)), paused=False)
+
+    assert first.active is True
+    assert first.cursor_mode == CursorControlMode.RELATIVE
+    assert first.cursor_position == (0.40, 0.50)
+    assert first.cursor_delta == (0.0, 0.0)
+
+
+def test_relative_cursor_filters_jitter_and_emits_slow_and_fast_delta() -> None:
+    engine = GestureEngine(
+        GestureConfig(
+            cursor_smoothing=0.50,
+            cursor_fast_smoothing=1.0,
+            cursor_dead_zone=0.001,
+            cursor_jitter_floor=0.005,
+            cursor_max_step=0.040,
+        )
+    )
+
+    engine.update(_shaka_tracking(), paused=False)
+    engine.update(_tracking_result(index_tip=(0.40, 0.50)), paused=False)
+
+    jitter = engine.update(_tracking_result(index_tip=(0.402, 0.501)), paused=False)
+    assert jitter.cursor_delta == (0.0, 0.0)
+
+    slow = engine.update(_tracking_result(index_tip=(0.412, 0.501)), paused=False)
+    assert slow.cursor_delta is not None
+    assert hypot(*slow.cursor_delta) > 0.0
+
+    fast = engine.update(_tracking_result(index_tip=(0.512, 0.501)), paused=False)
+    assert fast.cursor_delta is not None
+    assert 0.0 < hypot(*fast.cursor_delta) <= 0.040
+
+
+def test_relative_cursor_baseline_resets_after_pointing_loss_no_hand_and_pause() -> None:
+    engine = GestureEngine(
+        GestureConfig(
+            cursor_smoothing=1.0,
+            cursor_fast_smoothing=1.0,
+            cursor_dead_zone=0.001,
+            cursor_jitter_floor=0.001,
+            cursor_max_step=0.10,
+        )
+    )
+
+    engine.update(_shaka_tracking(), paused=False)
+    engine.update(_tracking_result(index_tip=(0.40, 0.50)), paused=False)
+    moved = engine.update(_tracking_result(index_tip=(0.46, 0.50)), paused=False)
+    assert moved.cursor_delta is not None
+    assert moved.cursor_delta[0] == pytest.approx(0.06)
+    assert moved.cursor_delta[1] == 0.0
+
+    not_pointing = engine.update(
+        _tracking_result(
+            index_tip=(0.70, 0.50),
+            overrides={
+                "middle_pip": (0.45, 0.58),
+                "middle_tip": (0.45, 0.48),
+            },
+        ),
+        paused=False,
+    )
+    assert not_pointing.cursor_delta is None
+
+    reseeded = engine.update(_tracking_result(index_tip=(0.70, 0.50)), paused=False)
+    assert reseeded.cursor_delta == (0.0, 0.0)
+
+    engine.update(_tracking_result(hand_present=False), paused=False)
+    after_no_hand = engine.update(_tracking_result(index_tip=(0.20, 0.50)), paused=False)
+    assert after_no_hand.cursor_delta == (0.0, 0.0)
+
+    paused = engine.update(_tracking_result(index_tip=(0.30, 0.50)), paused=True)
+    assert paused.paused is True
+    assert paused.cursor_delta is None
+
+    after_pause = engine.update(_tracking_result(index_tip=(0.90, 0.50)), paused=False)
+    assert after_pause.cursor_delta == (0.0, 0.0)
 
 
 def test_pinch_hold_suppresses_wave_scroll() -> None:

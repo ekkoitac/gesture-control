@@ -9,15 +9,15 @@
 - `gesture_control/tracking.py`
   - Responsibility: MediaPipe hand detection and normalized landmark output, including current Tasks model loading and legacy Hands fallback.
 - `gesture_control/gesture_engine.py`
-  - Responsibility: feature extraction, activation gating, index-pointing cursor intent, state transition logic, and debounce/cooldown calculations.
+  - Responsibility: feature extraction, activation gating, relative index-pointing cursor intent, adaptive cursor smoothing/filtering, state transition logic, and debounce/cooldown calculations.
 - `gesture_control/action_mapper.py`
-  - Responsibility: transform gesture snapshots into semantic actions (cursor move, scroll, wave wheel, shortcuts).
+  - Responsibility: transform gesture snapshots into semantic actions (cursor move with explicit mode/delta, scroll, wave wheel, shortcuts).
 - `gesture_control/backends/*`
-  - Responsibility: emit semantic actions via dry-run logging or macOS input APIs, including backend-specific screen coordinate mapping.
+  - Responsibility: emit semantic actions via dry-run logging or macOS input APIs, including backend-specific absolute and relative cursor coordinate mapping.
 - `gesture_control/debug_overlay.py`
   - Responsibility: render frame overlays for status, landmarks, active/paused state, and last emitted action.
 - `gesture_control/config.py` + `config/default.yaml`
-  - Responsibility: config schema + parsing + defaults for tracker model path, thresholds, smoothing, cooldowns, and shortcut bindings.
+  - Responsibility: config schema + parsing + defaults for tracker model path, cursor mode, thresholds, smoothing, cooldowns, and shortcut bindings.
 - `tests/*`
   - Responsibility: non-camera deterministic checks for math, state transitions, config parsing, and action mapping.
 

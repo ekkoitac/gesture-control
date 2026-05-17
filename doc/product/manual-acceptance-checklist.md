@@ -1,4 +1,4 @@
-# Manual Gesture Acceptance Checklist (v0.1)
+# Manual Gesture Acceptance Checklist (v0.2)
 
 ## Preconditions
 
@@ -18,6 +18,8 @@
   - `.venv/bin/python -m gesture_control --mode os`
 - OS-input preflight without real emission:
   - `.venv/bin/python -m gesture_control --mode os --no-camera --no-window --no-hotkeys --max-frames 5 --log-level INFO`
+- No-camera dry-run smoke:
+  - `.venv/bin/python -m gesture_control --mode dry-run --no-camera --no-window --no-hotkeys --max-frames 5 --log-level INFO`
 
 ## Acceptance Steps
 
@@ -38,7 +40,8 @@
 4. Cursor movement
    - Action: in active mode, point with the index finger, move it slowly left/right/up/down, then hold still.
    - Pose: a fully straight or slightly bent index finger counts as pointing; relaxed hands, open palms, and non-pointer gestures should not count.
-   - Expect: pointer follows smoothly in the same perceived direction as hand movement, with no aggressive jitter while hand is still.
+   - Expect: the first pointing frame seeds the relative-movement baseline without a cursor jump.
+   - Expect: pointer follows smoothly in the same perceived direction as hand movement, with no aggressive jitter while hand is still and no oversized leap on fast movement.
    - Expect: relaxed hands, open palms, and non-pointer gestures do not emit cursor movement.
    - Expect: cursor movement is suppressed while thumb-index pinch is held and on frames where wave scroll or shortcut dispatch fires.
 
@@ -72,3 +75,8 @@
 10. No-hand suppression
     - Action: remove hand from camera in active mode.
     - Expect: overlay shows tracking lost/no-hand and output actions stop until hand returns.
+
+## v0.2 Validation Note
+
+- Automated tests, ruff, and no-camera dry-run smoke validation cover the relative cursor contract and backend math.
+- Real OS-mode cursor-feel validation must still be performed manually on macOS before claiming the new movement feels acceptable in live use.

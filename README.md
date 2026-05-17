@@ -1,6 +1,6 @@
 # gesture-control
 
-Local webcam-based gesture control prototype (v0.1).
+Local webcam-based gesture control prototype (v0.2).
 
 ## Features
 
@@ -10,7 +10,7 @@ Local webcam-based gesture control prototype (v0.1).
   - back-of-hand shaka activates,
   - palm-facing thumbs down deactivates.
 - Gesture actions:
-  - index-finger pointing-pose cursor control,
+  - index-finger pointing-pose cursor control using relative movement with adaptive smoothing,
   - thumb-index pinch scrolling,
   - lateral wave wheel scrolling,
   - configurable gesture-to-shortcut mapping.
@@ -49,14 +49,16 @@ Hotkeys (from `config/default.yaml`):
 
 ## Docs
 
+- Active version TODO: `/doc/version/v0.2-cursor-smoothness/todo.md`
 - Prototype completion TODO: `/doc/version/v0.1-prototype/todo.md`
-- Active issue TODO: `/doc/version/v0.1-prototype/issues-todo.md`
+- Prototype issue TODO: `/doc/version/v0.1-prototype/issues-todo.md`
 - Architecture: `/doc/architecture/`
 - Manual acceptance: `/doc/product/manual-acceptance-checklist.md`
 
 ## Validation Notes
 
-- Python 3.12 is the default validation runtime for v0.1.
+- Python 3.12 is the default validation runtime for v0.2.
 - Real webcam validation requires macOS camera permission for the Python runtime.
 - OS-input mode requires macOS Accessibility permission for the Python runtime.
-- Dry-run and OS manual validation passed on the current macOS device after the index-pointing cursor gate and user-perspective cursor direction mapping changes.
+- Automated tests, ruff, and no-camera dry-run smoke validation passed for relative cursor control.
+- Real OS-mode cursor-feel validation still requires a manual macOS run; this README does not claim that pass.

@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Defect Detect"
+short_description: "基于 PRD、TRD 和 Git 变更追踪业务逻辑缺陷。"
+default_prompt: "$seedpacespec-defect-detect "

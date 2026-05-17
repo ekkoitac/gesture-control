@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Update Task"
+short_description: "修改已有变更的 TRD、design 和 tasks，不写业务代码。"
+default_prompt: "$seedpacespec-update-task "

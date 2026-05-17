@@ -40,8 +40,12 @@ class GestureConfig:
     control_fold_tolerance: float = 0.015
     control_extend_threshold: float = 0.04
     control_thumb_threshold: float = 0.075
+    cursor_mode: str = "relative"
     cursor_smoothing: float = 0.35
+    cursor_fast_smoothing: float = 0.70
     cursor_dead_zone: float = 0.012
+    cursor_jitter_floor: float = 0.004
+    cursor_max_step: float = 0.080
     pinch_threshold: float = 0.055
     pinch_release_threshold: float = 0.07
     pinch_scroll_gain: float = 1800.0
@@ -120,12 +124,20 @@ def _hotkeys_from_dict(data: dict[str, Any]) -> HotkeyConfig:
 
 
 def _gesture_from_dict(data: dict[str, Any]) -> GestureConfig:
+    cursor_mode = str(data.get("cursor_mode", "relative")).strip().lower()
+    if cursor_mode not in {"absolute", "relative"}:
+        raise ValueError("gesture.cursor_mode must be 'absolute' or 'relative'")
+
     return GestureConfig(
         control_fold_tolerance=float(data.get("control_fold_tolerance", 0.015)),
         control_extend_threshold=float(data.get("control_extend_threshold", 0.04)),
         control_thumb_threshold=float(data.get("control_thumb_threshold", 0.075)),
+        cursor_mode=cursor_mode,
         cursor_smoothing=float(data.get("cursor_smoothing", 0.35)),
+        cursor_fast_smoothing=float(data.get("cursor_fast_smoothing", 0.70)),
         cursor_dead_zone=float(data.get("cursor_dead_zone", 0.012)),
+        cursor_jitter_floor=float(data.get("cursor_jitter_floor", 0.004)),
+        cursor_max_step=float(data.get("cursor_max_step", 0.080)),
         pinch_threshold=float(data.get("pinch_threshold", 0.055)),
         pinch_release_threshold=float(data.get("pinch_release_threshold", 0.07)),
         pinch_scroll_gain=float(data.get("pinch_scroll_gain", 1800.0)),

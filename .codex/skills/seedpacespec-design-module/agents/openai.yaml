@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Design Module"
+short_description: "为复杂纯逻辑模块生成独立架构设计文档。"
+default_prompt: "$seedpacespec-design-module "

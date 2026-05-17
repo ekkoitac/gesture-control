@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: PRD Numbering"
+short_description: "为已有 PRD Markdown 补充或统一 R 编号。"
+default_prompt: "$seedpacespec-prd-numbering "

@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Figma To Style"
+short_description: "从 Figma .fig 文件提取 UI 还原所需样式上下文。"
+default_prompt: "$seedpacespec-figma-to-style "

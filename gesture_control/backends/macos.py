@@ -60,6 +60,38 @@ def _normalized_to_screen_position(
     return x, y
 
 
+def _clamp_screen_position(
+    x: float,
+    y: float,
+    *,
+    screen_width: int,
+    screen_height: int,
+) -> tuple[int, int]:
+    max_x = screen_width - 1
+    max_y = screen_height - 1
+    return (
+        int(max(0, min(max_x, round(x)))),
+        int(max(0, min(max_y, round(y)))),
+    )
+
+
+def _relative_normalized_delta_to_screen_position(
+    delta: tuple[float, float],
+    *,
+    current_position: tuple[int, int],
+    screen_width: int,
+    screen_height: int,
+) -> tuple[int, int]:
+    dx = -float(delta[0]) * (screen_width - 1)
+    dy = float(delta[1]) * (screen_height - 1)
+    return _clamp_screen_position(
+        current_position[0] + dx,
+        current_position[1] + dy,
+        screen_width=screen_width,
+        screen_height=screen_height,
+    )
+
+
 @dataclass
 class MacOSInputBackend(InputBackend):
     screen_width: int = 1920
@@ -74,6 +106,19 @@ class MacOSInputBackend(InputBackend):
 
     def emit(self, command: ActionCommand) -> None:
         if command.action_type == ActionType.MOVE_CURSOR:
+            mode = str(command.payload.get("mode", "absolute"))
+            if mode == "relative":
+                delta = command.payload.get("delta")
+                if not delta:
+                    return
+                self._mouse.position = _relative_normalized_delta_to_screen_position(
+                    delta,
+                    current_position=self._mouse.position,
+                    screen_width=self.screen_width,
+                    screen_height=self.screen_height,
+                )
+                return
+
             position = command.payload.get("position")
             if not position:
                 return

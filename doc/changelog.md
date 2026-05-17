@@ -2,6 +2,7 @@
 
 ## 2026-05-05
 
+- Completed `v0.2-cursor-smoothness`: package metadata is now `0.2.0`, cursor commands carry explicit absolute/relative mode, default cursor movement uses relative normalized deltas with adaptive smoothing, jitter filtering, max-step clamping, macOS relative emission applies deltas from the current pointer with user-perspective x direction and screen bounds, and pytest/ruff/no-camera dry-run smoke validation passed.
 - Upgraded version TODO governance with status lifecycle, progress board, phase gates, required task evidence, and stricter completion rules.
 - Opened `v0.2-cursor-smoothness` to optimize index-finger cursor smoothness and establish the relative cursor-control task split.
 - Completed `I0-05` to `I0-07`: cursor movement now requires an intentional index-finger pointing pose, macOS cursor x mapping is flipped to match user-perceived hand direction, user dry-run and OS manual validation passed, and release/known-issue docs now show the v0.1 issue TODO as complete.

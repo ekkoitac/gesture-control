@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Propose"
+short_description: "从新需求一站式生成 proposal、design、TRD 和 tasks。"
+default_prompt: "$seedpacespec-propose "

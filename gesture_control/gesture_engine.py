@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from math import hypot
 
 from gesture_control.config import GestureConfig
-from gesture_control.contracts import GestureSnapshot, Point3D, TrackingResult
+from gesture_control.contracts import CursorControlMode, GestureSnapshot, Point3D, TrackingResult
 
 
 def _distance(a: Point3D, b: Point3D) -> float:
@@ -19,7 +19,9 @@ class GestureEngine:
         self._active_latched = False
         self._control_gesture_latched: str | None = None
         self._pinch_contact = False
-        self._prev_cursor: tuple[float, float] | None = None
+        self._prev_cursor_raw: tuple[float, float] | None = None
+        self._smoothed_cursor_position: tuple[float, float] | None = None
+        self._smoothed_cursor_delta: tuple[float, float] = (0.0, 0.0)
         self._prev_pinch_index_y: float | None = None
         self._wave_anchor_x: float | None = None
         self._pinch_cooldown = 0
@@ -233,11 +235,56 @@ class GestureEngine:
 
         return None
 
+    def _cursor_mode(self) -> CursorControlMode:
+        return CursorControlMode(self.config.cursor_mode)
+
+    def _reset_cursor_state(self) -> None:
+        self._prev_cursor_raw = None
+        self._smoothed_cursor_position = None
+        self._smoothed_cursor_delta = (0.0, 0.0)
+
     def _reset_motion_state(self) -> None:
         self._pinch_contact = False
-        self._prev_cursor = None
+        self._reset_cursor_state()
         self._prev_pinch_index_y = None
         self._wave_anchor_x = None
+
+    def _clamp_cursor_delta(self, delta: tuple[float, float]) -> tuple[float, float]:
+        max_step = max(0.0, self.config.cursor_max_step)
+        if max_step == 0.0:
+            return (0.0, 0.0)
+
+        norm = hypot(delta[0], delta[1])
+        if norm <= max_step or norm == 0.0:
+            return delta
+
+        scale = max_step / norm
+        return (delta[0] * scale, delta[1] * scale)
+
+    def _relative_cursor_delta(self, raw_delta: tuple[float, float]) -> tuple[float, float]:
+        raw_norm = hypot(raw_delta[0], raw_delta[1])
+        if raw_norm < max(0.0, self.config.cursor_jitter_floor):
+            self._smoothed_cursor_delta = (0.0, 0.0)
+            return (0.0, 0.0)
+
+        target_delta = self._clamp_cursor_delta(raw_delta)
+        target_norm = hypot(target_delta[0], target_delta[1])
+        max_step = max(self.config.cursor_max_step, target_norm, 1e-9)
+        speed_scale = min(1.0, target_norm / max_step)
+        slow_alpha = min(max(self.config.cursor_smoothing, 0.0), 1.0)
+        fast_alpha = min(max(self.config.cursor_fast_smoothing, slow_alpha), 1.0)
+        alpha = slow_alpha + (fast_alpha - slow_alpha) * speed_scale
+
+        previous = self._smoothed_cursor_delta
+        filtered = (
+            alpha * target_delta[0] + (1.0 - alpha) * previous[0],
+            alpha * target_delta[1] + (1.0 - alpha) * previous[1],
+        )
+        self._smoothed_cursor_delta = filtered
+
+        if hypot(filtered[0], filtered[1]) < max(0.0, self.config.cursor_dead_zone):
+            return (0.0, 0.0)
+        return filtered
 
     def update(self, tracking: TrackingResult, paused: bool) -> GestureSnapshot:
         self._consume_cooldowns()
@@ -266,30 +313,53 @@ class GestureEngine:
         index_pointing = self._detect_index_pointing_pose(tracking)
         metrics["index_pointing"] = 1.0 if index_pointing else 0.0
 
+        cursor_mode = self._cursor_mode()
         cursor_position: tuple[float, float] | None = None
         cursor_delta: tuple[float, float] | None = None
-        if index_tip and index_pointing:
+        if active and index_tip and index_pointing:
             raw_cursor = (index_tip.x, index_tip.y)
-            if self._prev_cursor is None:
-                smoothed = raw_cursor
-                cursor_delta = (0.0, 0.0)
+            if cursor_mode == CursorControlMode.RELATIVE:
+                cursor_position = raw_cursor
+                if self._prev_cursor_raw is None:
+                    cursor_delta = (0.0, 0.0)
+                    self._smoothed_cursor_delta = (0.0, 0.0)
+                else:
+                    raw_delta = (
+                        raw_cursor[0] - self._prev_cursor_raw[0],
+                        raw_cursor[1] - self._prev_cursor_raw[1],
+                    )
+                    cursor_delta = self._relative_cursor_delta(raw_delta)
+                    metrics["cursor_delta_raw_norm"] = hypot(raw_delta[0], raw_delta[1])
+                self._prev_cursor_raw = raw_cursor
+                self._smoothed_cursor_position = None
             else:
-                alpha = self.config.cursor_smoothing
-                smoothed = (
-                    alpha * raw_cursor[0] + (1.0 - alpha) * self._prev_cursor[0],
-                    alpha * raw_cursor[1] + (1.0 - alpha) * self._prev_cursor[1],
-                )
-                cursor_delta = (
-                    smoothed[0] - self._prev_cursor[0],
-                    smoothed[1] - self._prev_cursor[1],
-                )
+                if self._smoothed_cursor_position is None:
+                    smoothed = raw_cursor
+                    cursor_delta = (0.0, 0.0)
+                else:
+                    alpha = self.config.cursor_smoothing
+                    smoothed = (
+                        alpha * raw_cursor[0] + (1.0 - alpha) * self._smoothed_cursor_position[0],
+                        alpha * raw_cursor[1] + (1.0 - alpha) * self._smoothed_cursor_position[1],
+                    )
+                    cursor_delta = (
+                        smoothed[0] - self._smoothed_cursor_position[0],
+                        smoothed[1] - self._smoothed_cursor_position[1],
+                    )
 
-            self._prev_cursor = smoothed
-            cursor_position = smoothed
+                self._prev_cursor_raw = raw_cursor
+                self._smoothed_cursor_position = smoothed
+                cursor_position = smoothed
+                if (
+                    cursor_delta is not None
+                    and hypot(cursor_delta[0], cursor_delta[1]) < self.config.cursor_dead_zone
+                ):
+                    cursor_delta = (0.0, 0.0)
+
             if cursor_delta is not None:
                 metrics["cursor_delta_norm"] = hypot(cursor_delta[0], cursor_delta[1])
         else:
-            self._prev_cursor = None
+            self._reset_cursor_state()
 
         pinch_scroll = 0.0
         pinch_active = False
@@ -340,13 +410,11 @@ class GestureEngine:
             shortcut_gesture = detected_gesture
             self._shortcut_cooldown = self.config.shortcut_cooldown_frames
 
-        if cursor_delta is not None and metrics.get("cursor_delta_norm", 0.0) < self.config.cursor_dead_zone:
-            cursor_delta = (0.0, 0.0)
-
         return GestureSnapshot(
             active=active,
             paused=paused,
             tracking_lost=False,
+            cursor_mode=cursor_mode,
             cursor_position=cursor_position,
             cursor_delta=cursor_delta,
             pinch_active=pinch_active,

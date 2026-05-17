@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Figma To PRD"
+short_description: "从 Figma .fig 文件逆向解析并生成 PRD。"
+default_prompt: "$seedpacespec-figma-to-prd "

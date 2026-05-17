@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Archive Change"
+short_description: "归档已完成变更，生成 changelog 并完成收尾。"
+default_prompt: "$seedpacespec-archive-change "

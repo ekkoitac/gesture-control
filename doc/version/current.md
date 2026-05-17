@@ -2,9 +2,9 @@
 
 - Active version: `v0.2-cursor-smoothness`
 - Active TODO: `doc/version/v0.2-cursor-smoothness/todo.md`
-- Active phase: `Phase 0`
-- Active task: `V2-01`
-- Status: `planned`
+- Active phase: `Completed`
+- Active task: `None`
+- Status: `done`
 
 ## Agent Entry
 

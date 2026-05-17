@@ -3,7 +3,7 @@
 ## Project Snapshot
 
 - Project: `gesture-control`
-- Stage: v0.2 cursor smoothness planned
+- Stage: v0.2 cursor smoothness implemented
 - Source-of-truth strategy: `spec-strategy.md`
 
 ## Progressive Read Order

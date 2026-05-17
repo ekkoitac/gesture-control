@@ -1,0 +1,3 @@
+display_name: "SeedpaceSpec: Apply Change"
+short_description: "按 tasks.md 和 TRD 实现活跃变更中的编码任务。"
+default_prompt: "$seedpacespec-apply-change "
